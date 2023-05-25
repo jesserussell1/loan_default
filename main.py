@@ -33,10 +33,10 @@ with left_column:
         'Education:',
         np.unique(data['EDUCATION']))
 
-input_credit_limit = st.slider('Credit limit', 0.0, max(data["LIMIT_BAL"]), 1.0)
-input_bill = st.slider('Most recent bill amount', 0.0, max(data["BILL_AMT6"]), 1.0)
-input_payment = st.slider('Most recent payment amount', 0.0, max(data["PAY_AMT6"]), 1.0)
-input_age = st.slider('Age', 0.0, max(data["AGE"]), 1.0)
+input_credit_limit = st.slider('Credit limit', 0.0, 1000000.0, 1.0)
+input_bill = st.slider('Most recent bill amount', 0.0, 1000000.0, 1.0)
+input_payment = st.slider('Most recent payment amount', 0.0,1000000.0, 1.0)
+input_age = st.slider('Age', 0, 100, 1)
 
 
 
