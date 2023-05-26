@@ -8,7 +8,8 @@ st.header("Loan Default Prediction App")
 st.text_input("Enter your Name: ", key="name")
 data = pd.read_csv("defaults_data.csv")
 
-education_mapping = {1:'graduate school'
+education_mapping = {0:'other'
+                    ,1:'graduate school'
                     ,2:'university'
                     ,3:'high school'
                     ,4:'other'
@@ -22,16 +23,22 @@ sex_mapping = {1:'male'
 
 data = data.assign(SEX=data.SEX.map(sex_mapping))
 
-marriage_mapping = {1:'married'
-                   ,2:'single'
-                    ,3:'other'}
+marriage_mapping = {0:'other'
+                   , 1:'married'
+                   , 2:'single'
+                   , 3:'other'}
 
 data = data.assign(MARRIAGE=data.MARRIAGE.map(marriage_mapping))
 
 
 #load label encoder
-encoder = LabelEncoder()
-encoder.classes_ = np.load('classes.npy',allow_pickle=True)
+encoder_m = LabelEncoder()
+encoder_m.classes_ = np.load('classes_m.npy',allow_pickle=True)
+encoder_e = LabelEncoder()
+encoder_e.classes_ = np.load('classes_e.npy',allow_pickle=True)
+encoder_s = LabelEncoder()
+encoder_s.classes_ = np.load('classes_s.npy',allow_pickle=True)
+
 
 # load model
 best_xgboost_model = xgb.XGBRegressor()
