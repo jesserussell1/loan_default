@@ -132,11 +132,18 @@ best = fmin(fn=hyperparameter_tuning,
 
 print(best)
 #%%
+# Create weights
+classes_weights = class_weight.compute_sample_weight(
+    class_weight='balanced',
+    y=y_train
+)
+
+
 # Fit XGBoost model with best hyperparameters
 best['max_depth'] = int(best['max_depth']) # convert to int
-best["n_estimators"] = num_estimator[best["n_estimators"]] # assing n_estimator because it returs the index
+#best["n_estimators"] = num_estimator[best["n_estimators"]] # assing n_estimator because it returs the index
 best_xgboost_model = xgb.XGBRegressor(**best)
-best_xgboost_model.fit(x_train,y_train)
+best_xgboost_model.fit(x_train,y_train, sample_weight=classes_weights)
 pred = best_xgboost_model.predict(x_test)
 score_MSE, score_MAE, score_r2score = evauation_model(pred,y_test)
 to_append = ["XGboost_hyper_tuned",score_MSE, score_MAE, score_r2score]
