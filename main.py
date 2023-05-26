@@ -5,6 +5,11 @@ from sklearn.preprocessing import  LabelEncoder
 import xgboost as xgb
 import numpy as np
 st.header("Loan Default Prediction App")
+st.header("XGBoost Model for Loan Default Prediction")
+st.text("Jesse Russell - May 2023")
+st.text("Data Source: https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients#")
+
+
 st.text_input("Enter your Name: ", key="name")
 data = pd.read_csv("defaults_data.csv")
 
@@ -64,7 +69,7 @@ with left_column:
 
 input_credit_limit = st.slider('Credit limit', 0, 100000, 1)
 input_bill = st.slider('Most recent bill amount', 0, 100000, 1)
-input_payment = st.slider('Most recent payment amount', 0,100000, 1)
+input_payment = st.slider('Most recent payment amount', 0,60000, 1)
 input_age = st.slider('Age', 0, 100, 1)
 
 
