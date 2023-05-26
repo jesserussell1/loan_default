@@ -102,12 +102,12 @@ df_result_scores
 num_estimator = [50, 150, 200, 500]
 
 # Hyperparamaters to test
-space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
-         'gamma': hp.uniform('gamma', 1, 9),
+space = {'max_depth': hp.quniform("max_depth", 7, 18, 1),
+         'gamma': hp.uniform('gamma', 0, 9),
          'reg_alpha': hp.quniform('reg_alpha', 30, 180, 1),
          'reg_lambda': hp.uniform('reg_lambda', 0, 1),
          'colsample_bytree': hp.uniform('colsample_bytree', 0.5, 1),
-         'min_child_weight': hp.quniform('min_child_weight', 0, 10, 1),
+         'min_child_weight': hp.quniform('min_child_weight', 0, 10, 200),
          'n_estimators': hp.choice("n_estimators", num_estimator),
          }
 
@@ -117,7 +117,7 @@ def hyperparameter_tuning(space):
                              gamma=space['gamma'],
                              reg_alpha=int(space['reg_alpha']), min_child_weight=space['min_child_weight'],
                              colsample_bytree=space['colsample_bytree'], objective="reg:squarederror",
-                              scale_pos_weight=5)
+                              scale_pos_weight=3.5)
 
     score_cv = cross_val_score(model, x_train, y_train, cv=5, scoring="roc_auc").mean()
     return {'loss': -score_cv, 'status': STATUS_OK, 'model': model}
