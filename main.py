@@ -73,8 +73,20 @@ if st.button('Make Prediction'):
     #inp_marriage = encoder_m.transform(np.expand_dims(inp_marriage, -1))
     #inp_education = encoder_e.transform(np.expand_dims(inp_education, -1))
 
+
+    # replacing values
+    gender_value = 1 if inp_gender == "male" else 2
+
+    marriage_value = 0 if inp_marriage == "other" else (1 if inp_marriage == "married" else
+                                                        (2 if inp_marriage == "single" else 0))
+
+    edu_value = 0 if inp_education == "other" else (1 if inp_education == "graduate school" else
+                                                        (2 if inp_education == "university" else
+                                                         (3 if inp_education == "high school" else 0)))
+
+
     inputs = np.expand_dims(
-        [int(inp_gender), int(inp_marriage), int(inp_education),
+        [int(gender_value), int(marriage_value), int(edu_value),
          input_credit_limit, input_bill, input_payment, input_age], 0)
     prediction = best_xgboost_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
