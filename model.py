@@ -46,13 +46,10 @@ data = pd.read_csv("defaults_data.csv")
 pd.options.display.max_columns = data.shape[1]
 data.describe()
 
-education_mapping = {'N':'North'
-                    ,'S':'South'
-                    ,'E':'East'
-                    ,'W':'West'
-                    }
 
 y = data['default']
+data = data.drop("default", axis=1)
+
 #%%
 x_train, x_test, y_train, y_test = train_test_split(data,y, test_size=0.2, random_state=42)
 label_encoder = LabelEncoder()
