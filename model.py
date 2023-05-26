@@ -102,11 +102,11 @@ df_result_scores
 num_estimator = [50, 150, 200, 500]
 
 # Hyperparamaters to test
-space = {'max_depth': hp.quniform("max_depth", 7, 18, 1),
+space = {'max_depth': hp.quniform("max_depth", 7, 28, 1),
          'gamma': hp.uniform('gamma', 0, 9),
          'reg_alpha': hp.quniform('reg_alpha', 30, 180, 1),
-         'reg_lambda': hp.uniform('reg_lambda', 0, 1),
-         'colsample_bytree': hp.uniform('colsample_bytree', 0.5, 1),
+         'reg_lambda': hp.uniform('reg_lambda', 0, 5),
+         'colsample_bytree': hp.uniform('colsample_bytree', 0, 1),
          'min_child_weight': hp.quniform('min_child_weight', 0, 10, 200),
          'n_estimators': hp.choice("n_estimators", num_estimator),
          }
