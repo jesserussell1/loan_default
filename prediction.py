@@ -13,6 +13,27 @@ def evauation_model(pred, y_val):
 
 data = pd.read_csv("defaults_data.csv")
 
+education_mapping = {1:'graduate school'
+                    ,2:'university'
+                    ,3:'high school'
+                    ,4:'other'
+                    ,5:'other'
+                    ,6:'other'}
+
+data = data.assign(EDUCATION=data.EDUCATION.map(education_mapping))
+
+sex_mapping = {1:'male'
+              ,2:'female'}
+
+data = data.assign(SEX=data.SEX.map(sex_mapping))
+
+marriage_mapping = {1:'married'
+                   ,2:'single'
+                    ,3:'other'}
+
+data = data.assign(MARRIAGE=data.MARRIAGE.map(marriage_mapping))
+
+
 y = data['default']
 
 data_clean = data.drop("default", axis=1)
@@ -36,13 +57,13 @@ pred = best_xgboost_model.predict(x_test)
 score_MSE, score_MAE, score_r2score = evauation_model(pred, y_test)
 print(score_MSE, score_MAE, score_r2score)
 #%%
-loaded_encoder = LabelEncoder()
-loaded_encoder.classes_ = np.load('classes.npy',allow_pickle=True)
-print(x_test.shape)
-input_default = loaded_encoder.transform(np.expand_dims("0",-1))
-print(int(input_default))
-inputs = np.expand_dims([0,1,1,1,24,0,0],0)
-print(inputs.shape)
-prediction = best_xgboost_model.predict(inputs)
-print("final pred", np.squeeze(prediction,-1))
+#loaded_encoder = LabelEncoder()
+#loaded_encoder.classes_ = np.load('classes.npy',allow_pickle=True)
+#print(x_test.shape)
+#input_default = loaded_encoder.transform(np.expand_dims("0", -1))
+#print(int(input_default))
+#inputs = np.expand_dims([1000, 'female', 'university', 'married', 24, 100, 100], 0)
+#print(inputs.shape)
+#prediction = best_xgboost_model.predict(inputs)
+#print("final pred", np.squeeze(prediction,-1))
 

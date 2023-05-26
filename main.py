@@ -7,6 +7,28 @@ import numpy as np
 st.header("Loan Default Prediction App")
 st.text_input("Enter your Name: ", key="name")
 data = pd.read_csv("defaults_data.csv")
+
+education_mapping = {1:'graduate school'
+                    ,2:'university'
+                    ,3:'high school'
+                    ,4:'other'
+                    ,5:'other'
+                    ,6:'other'}
+
+data = data.assign(EDUCATION=data.EDUCATION.map(education_mapping))
+
+sex_mapping = {1:'male'
+              ,2:'female'}
+
+data = data.assign(SEX=data.SEX.map(sex_mapping))
+
+marriage_mapping = {1:'married'
+                   ,2:'single'
+                    ,3:'other'}
+
+data = data.assign(MARRIAGE=data.MARRIAGE.map(marriage_mapping))
+
+
 #load label encoder
 encoder = LabelEncoder()
 encoder.classes_ = np.load('classes.npy',allow_pickle=True)
@@ -49,7 +71,7 @@ if st.button('Make Prediction'):
          input_credit_limit, input_bill, input_payment, input_age], 0)
     prediction = best_xgboost_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
-    st.write(f"Your loan default prediction is: {np.squeeze(prediction, -1):.2f}g")
+    st.write(f"Your loan default prediction is: {np.squeeze(prediction, -1):.2f}%")
 
     st.write(f"Thank you {st.session_state.name}! I hope you liked it.")
 

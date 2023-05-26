@@ -1,7 +1,4 @@
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from itertools import combinations
 import numpy as np
 from hyperopt import hp
 from hyperopt import fmin, tpe, STATUS_OK, STATUS_FAIL, Trials
@@ -12,6 +9,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.utils import class_weight
 def evauation_model(pred, y_val):
   score_MSE = round(mean_squared_error(pred, y_val),2)
   score_MAE = round(mean_absolute_error(pred, y_val),2)
@@ -44,8 +42,27 @@ def models_score(model_name, train_data, y_train, val_data, y_val):
 data = pd.read_csv("defaults_data.csv")
 
 pd.options.display.max_columns = data.shape[1]
-data.describe()
+data["SEX"].describe()
 
+education_mapping = {1:'graduate school'
+                    ,2:'university'
+                    ,3:'high school'
+                    ,4:'other'
+                    ,5:'other'
+                    ,6:'other'}
+
+data = data.assign(EDUCATION=data.EDUCATION.map(education_mapping))
+
+sex_mapping = {1:'male'
+              ,2:'female'}
+
+data = data.assign(SEX=data.SEX.map(sex_mapping))
+
+marriage_mapping = {1:'married'
+                   ,2:'single'
+                    ,3:'other'}
+
+data = data.assign(MARRIAGE=data.MARRIAGE.map(marriage_mapping))
 
 y = data['default']
 data_clean = data.drop("default", axis=1)
