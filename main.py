@@ -9,8 +9,6 @@ st.header("XGBoost Model for Loan Default Prediction")
 st.subheader("Jesse Russell - May 2023")
 st.text("Data Source: https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients#")
 
-
-st.text_input("Enter your Name: ", key="name")
 data = pd.read_csv("defaults_data.csv")
 
 education_mapping = {0:'other'
@@ -93,9 +91,6 @@ if st.button('Make Prediction'):
     inputs = np.expand_dims(
         [int(gender_value), int(marriage_value), int(edu_value),
          input_credit_limit, input_bill, input_payment, input_age], 0)
-    prediction = best_xgboost_model.predict(inputs)
+    prediction = best_xgboost_model.predict_proba(inputs)
     print("final pred", np.squeeze(prediction, -1))
     st.write(f"Your loan default prediction is: {np.squeeze(prediction * 100, -1):.2f}%")
-
-    st.write(f"Thank you {st.session_state.name}! I hope you liked it.")
-
