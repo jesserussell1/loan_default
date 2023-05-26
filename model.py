@@ -99,7 +99,7 @@ for model in model_list:
 df_result_scores = pd.DataFrame(result_scores,columns=["model","mse","mae","r2score"])
 df_result_scores
 #%%
-num_estimator = [100, 150, 200, 250]
+num_estimator = [50, 150, 200, 500]
 
 # Hyperparamaters to test
 space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
@@ -113,12 +113,12 @@ space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
 
 # Function to test hyperparameters
 def hyperparameter_tuning(space):
-    model = xgb.XGBRegressor(n_estimators=space['n_estimators'], max_depth=int(space['max_depth']),
+    model = xgb.XGBClassifier(n_estimators=space['n_estimators'], max_depth=int(space['max_depth']),
                              gamma=space['gamma'],
                              reg_alpha=int(space['reg_alpha']), min_child_weight=space['min_child_weight'],
                              colsample_bytree=space['colsample_bytree'], objective="reg:squarederror")
 
-    score_cv = cross_val_score(model, x_train, y_train, cv=5, scoring="neg_mean_absolute_error").mean()
+    score_cv = cross_val_score(model, x_train, y_train, cv=5, scoring="roc_auc").mean()
     return {'loss': -score_cv, 'status': STATUS_OK, 'model': model}
 
 # Fit models with different hyperparameters
