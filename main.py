@@ -40,9 +40,9 @@ input_age = st.slider('Age', 0, 100, 1)
 
 
 if st.button('Make Prediction'):
-    inp_gender = encoder.transform(np.expand_dims(inp_gender))
-    inp_marriage = encoder.transform(np.expand_dims(inp_marriage))
-    inp_education = encoder.transform(np.expand_dims(inp_education))
+    inp_gender = encoder.transform(np.expand_dims(inp_gender, -1))
+    inp_marriage = encoder.transform(np.expand_dims(inp_marriage, -1))
+    inp_education = encoder.transform(np.expand_dims(inp_education, -1))
 
     inputs = np.expand_dims(
         [int(inp_gender), int(inp_marriage), int(inp_education),
@@ -52,3 +52,4 @@ if st.button('Make Prediction'):
     st.write(f"Your prediction is: {np.squeeze(prediction, -1):.2f}g")
 
     st.write(f"Thank you {st.session_state.name}! I hope you liked it.")
+
