@@ -11,7 +11,6 @@ def evauation_model(pred, y_val):
   score_r2score = round(r2_score(pred, y_val),2)
   return score_MSE, score_MAE, score_r2score
 
-
 data = pd.read_csv("defaults_data.csv")
 
 y = data['default']
@@ -42,7 +41,7 @@ loaded_encoder.classes_ = np.load('classes.npy',allow_pickle=True)
 print(x_test.shape)
 input_default = loaded_encoder.transform(np.expand_dims("0",-1))
 print(int(input_default))
-inputs = np.expand_dims([int(input_default),0,1,1,1,24,0,0],0)
+inputs = np.expand_dims([0,1,1,1,24,0,0],0)
 print(inputs.shape)
 prediction = best_xgboost_model.predict(inputs)
 print("final pred", np.squeeze(prediction,-1))
