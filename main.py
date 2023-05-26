@@ -4,9 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import  LabelEncoder
 import xgboost as xgb
 import numpy as np
-st.header("Loan Default Prediction App")
+st.title("Loan Default Prediction App")
 st.header("XGBoost Model for Loan Default Prediction")
-st.text("Jesse Russell - May 2023")
+st.subheader("Jesse Russell - May 2023")
 st.text("Data Source: https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients#")
 
 
