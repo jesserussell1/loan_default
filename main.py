@@ -91,6 +91,6 @@ if st.button('Make Prediction'):
     inputs = np.expand_dims(
         [int(gender_value), int(marriage_value), int(edu_value),
          input_credit_limit, input_bill, input_payment, input_age], 0)
-    prediction = best_xgboost_model.predict_proba(inputs)
+    prediction = best_xgboost_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
     st.write(f"Your loan default prediction is: {np.squeeze(prediction * 100, -1):.2f}%")
