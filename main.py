@@ -90,7 +90,7 @@ if st.button('Make Prediction'):
          input_credit_limit, input_bill, input_payment, input_age], 0)
     prediction = best_xgboost_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
-    st.write(f"Your loan default prediction is: {np.squeeze(prediction, -1):.2f}%")
+    st.write(f"Your loan default prediction is: {np.squeeze(prediction * 100, -1):.2f}%")
 
     st.write(f"Thank you {st.session_state.name}! I hope you liked it.")
 
