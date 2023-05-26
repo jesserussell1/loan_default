@@ -52,4 +52,3 @@ if st.button('Make Prediction'):
     st.write(f"Your prediction is: {np.squeeze(prediction, -1):.2f}g")
 
     st.write(f"Thank you {st.session_state.name}! I hope you liked it.")
-
