@@ -116,7 +116,8 @@ def hyperparameter_tuning(space):
     model = xgb.XGBClassifier(n_estimators=space['n_estimators'], max_depth=int(space['max_depth']),
                              gamma=space['gamma'],
                              reg_alpha=int(space['reg_alpha']), min_child_weight=space['min_child_weight'],
-                             colsample_bytree=space['colsample_bytree'], objective="reg:squarederror")
+                             colsample_bytree=space['colsample_bytree'], objective="reg:squarederror",
+                              scale_pos_weight=5)
 
     score_cv = cross_val_score(model, x_train, y_train, cv=5, scoring="roc_auc").mean()
     return {'loss': -score_cv, 'status': STATUS_OK, 'model': model}
@@ -133,10 +134,10 @@ best = fmin(fn=hyperparameter_tuning,
 print(best)
 #%%
 # Create weights
-classes_weights = class_weight.compute_sample_weight(
-    class_weight='balanced',
-    y=y_train
-)
+#classes_weights = class_weight.compute_sample_weight(
+#    class_weight='balanced',
+#    y=y_train
+#)
 
 # Code to weight the model to account for imballance
 # , sample_weight=classes_weights
